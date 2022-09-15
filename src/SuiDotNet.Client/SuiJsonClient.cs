@@ -139,7 +139,7 @@ namespace SuiDotNet.Client
             var tasks = new Task<object[]>[2];
             tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsToAddress", null, address);
             tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsFromAddress", null, address);
-            Task.WaitAll(tasks as Task[]);
+            await Task.WhenAll(tasks);
 
             var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
             var results = new object[resultCount];
@@ -160,7 +160,7 @@ namespace SuiDotNet.Client
             var tasks = new Task<object[]>[2];
             tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByInputObject", null, objectId);
             tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByMutatedObject", null, objectId);
-            Task.WaitAll(tasks as Task[]);
+            await Task.WhenAll(tasks);
 
             var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
             var results = new object[resultCount];
