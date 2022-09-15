@@ -144,7 +144,7 @@ namespace SuiDotNet.Client
             var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
             var results = new object[resultCount];
             var resultIndex = 0;
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i <= 1; i++)
             {
                 foreach (var tx in tasks[i].Result)
                 {
@@ -165,7 +165,7 @@ namespace SuiDotNet.Client
             var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
             var results = new object[resultCount];
             var resultIndex = 0;
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i <= 1; i++)
             {
                 foreach (var tx in tasks[i].Result)
                 {
