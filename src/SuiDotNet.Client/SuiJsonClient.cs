@@ -134,42 +134,46 @@ namespace SuiDotNet.Client
             return obj;
         }
         
-        public async Task<object[]> GetTransactionsForAddress(string address)
+        public async Task<SequencedTransaction[]> GetTransactionsForAddress(string address)
         {
-            var tasks = new Task<object[]>[2];
-            tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsToAddress", null, address);
-            tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsFromAddress", null, address);
+            var tasks = new Task<object[][]>[2];
+            tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsToAddress", null, address);
+            tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsFromAddress", null, address);
             await Task.WhenAll(tasks);
 
             var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
-            var results = new object[resultCount];
+            var results = new SequencedTransaction[resultCount];
             var resultIndex = 0;
             for (var i = 0; i <= 1; i++)
             {
                 foreach (var tx in tasks[i].Result)
                 {
-                    results[resultIndex] = tx;
+                    var seq = Convert.ToUInt64(tx[0]);
+                    var digest = (string) tx[1];
+                    results[resultIndex] = new SequencedTransaction { SequenceNumber = seq, Digest = digest };
                     resultIndex++;
                 }
             }
             return results;
         }
 
-        public async Task<object[]> GetTransactionsForObject(string objectId)
+        public async Task<SequencedTransaction[]> GetTransactionsForObject(string objectId)
         {
-            var tasks = new Task<object[]>[2];
-            tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByInputObject", null, objectId);
-            tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByMutatedObject", null, objectId);
+            var tasks = new Task<object[][]>[2];
+            tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByInputObject", null, objectId);
+            tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByMutatedObject", null, objectId);
             await Task.WhenAll(tasks);
 
             var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
-            var results = new object[resultCount];
+            var results = new SequencedTransaction[resultCount];
             var resultIndex = 0;
             for (var i = 0; i <= 1; i++)
             {
                 foreach (var tx in tasks[i].Result)
                 {
-                    results[resultIndex] = tx;
+                    var seq = Convert.ToUInt64(tx[0]);
+                    var digest = (string) tx[1];
+                    results[resultIndex] = new SequencedTransaction { SequenceNumber = seq, Digest = digest };
                     resultIndex++;
                 }
             }
