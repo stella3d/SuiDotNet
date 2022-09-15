@@ -130,12 +130,14 @@ namespace SuiDotNet.Client
 
         public async Task<object> GetTransactionWithEffects(string txDigest)
         {
-            var obj = await _rpcClient.SendRequestAsync<object>("sui_getTransaction", null, txDigest);
-            return obj;
+            return await _rpcClient.SendRequestAsync<object>("sui_getTransaction", null, txDigest);
         }
         
         public async Task<SequencedTransaction[]> GetTransactionsForAddress(string address)
         {
+            if (!StringTypes.IsValidSuiAddress(address))
+                throw new Exception("'address' must be a 20-byte hex string starting with 0x");
+            
             var tasks = new Task<object[][]>[2];
             tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsToAddress", null, address);
             tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsFromAddress", null, address);
