@@ -127,5 +127,37 @@ namespace SuiDotNet.Client
                 .Select(x => SuiEx.ObjectFromDictionary(x.Data.Fields, objectType))
                 .ToArray();
         }
+
+        public async Task<object> GetTransactionWithEffects(string txDigest)
+        {
+            var obj = await _rpcClient.SendRequestAsync<object>("sui_getTransaction", null, txDigest);
+            return obj;
+        }
+        
+        public async Task<object[][]> GetTransactionsForAddress(string address)
+        {
+            var tasks = new Task<object[]>[2];
+            tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsToAddress", null, address);
+            tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsFromAddress", null, address);
+            Task.WaitAll(tasks as Task[]);
+
+            var results = new object[][2];
+            results[0] = tasks[0].Result;
+            results[1] = tasks[1].Result;
+            return results;
+        }
+
+        public async Task<object[][]> GetTransactionsForObject(string objectId)
+        {
+            var tasks = new Task<object[]>[2];
+            tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByInputObject", null, objectId);
+            tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByMutatedObject", null, objectId);
+            Task.WaitAll(tasks as Task[]);
+
+            var results = new object[][2];
+            results[0] = tasks[0].Result;
+            results[1] = tasks[1].Result;
+            return results;
+        }
     }
 }

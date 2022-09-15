@@ -19,5 +19,9 @@ namespace SuiDotNet.Client
         Task<object[]> GetObjects(Type objectType, params SuiObjectInfo[] objectInfos);
         Task<T[]> GetObjects<T>(params string[] objectIds) where T : class;
         Task<object[]> GetObjects(Type objectType, params string[] objectIds);
+
+        Task<object> GetTransactionWithEffects(string txDigest);
+        Task<object[][]> GetTransactionsForAddress(string address);
+        Task<object[][]> GetTransactionsForObject(string objectId);
     }
 }
