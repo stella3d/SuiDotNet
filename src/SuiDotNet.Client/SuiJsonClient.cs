@@ -134,29 +134,46 @@ namespace SuiDotNet.Client
             return obj;
         }
         
-        public async Task<object[][]> GetTransactionsForAddress(string address)
+        public async Task<object[]> GetTransactionsForAddress(string address)
         {
             var tasks = new Task<object[]>[2];
             tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsToAddress", null, address);
             tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsFromAddress", null, address);
             Task.WaitAll(tasks as Task[]);
 
-            var results = new object[][2];
-            results[0] = tasks[0].Result;
-            results[1] = tasks[1].Result;
+            var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
+            var results = new object[resultCount];
+            var resultIndex = 0;
+            for (var i = 0; i < 1; i++)
+            {
+                foreach (var tx in tasks[i].Result)
+                {
+                    results[resultIndex] = tx;
+                    resultIndex++;
+                }
+            }
             return results;
         }
 
-        public async Task<object[][]> GetTransactionsForObject(string objectId)
+        public async Task<object[]> GetTransactionsForObject(string objectId)
         {
             var tasks = new Task<object[]>[2];
             tasks[0] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByInputObject", null, objectId);
             tasks[1] = _rpcClient.SendRequestAsync<object[]>("sui_getTransactionsByMutatedObject", null, objectId);
             Task.WaitAll(tasks as Task[]);
 
-            var results = new object[][2];
-            results[0] = tasks[0].Result;
-            results[1] = tasks[1].Result;
+            var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
+            var results = new object[resultCount];
+            var resultIndex = 0;
+            for (var i = 0; i < 1; i++)
+            {
+                foreach (var tx in tasks[i].Result)
+                {
+                    results[resultIndex] = tx;
+                    resultIndex++;
+                }
+            }
+
             return results;
         }
     }

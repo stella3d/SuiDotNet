@@ -21,7 +21,7 @@ namespace SuiDotNet.Client
         Task<object[]> GetObjects(Type objectType, params string[] objectIds);
 
         Task<object> GetTransactionWithEffects(string txDigest);
-        Task<object[][]> GetTransactionsForAddress(string address);
-        Task<object[][]> GetTransactionsForObject(string objectId);
+        Task<object[]> GetTransactionsForAddress(string address);
+        Task<object[]> GetTransactionsForObject(string objectId);
     }
 }
