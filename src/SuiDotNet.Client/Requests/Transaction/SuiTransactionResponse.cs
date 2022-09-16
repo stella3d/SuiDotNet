@@ -7,7 +7,7 @@ namespace SuiDotNet.Client.Requests
     public class SuiTransactionResponse
     {
         [JsonProperty("certificate", Required = Required.Always)]
-        public object Certificate { get; set; }
+        public CertifiedTransaction Certificate { get; set; }
         
         [JsonProperty("effects", Required = Required.Always)]
         public TransactionEffects Effects { get; }
@@ -19,7 +19,7 @@ namespace SuiDotNet.Client.Requests
         public ulong? Timestamp { get; set;}
         
         public SuiTransactionResponse(
-            object cert,
+            CertifiedTransaction cert,
             TransactionEffects effects,
             SuiParsedTransactionResponse? parsed,
             ulong? time)
