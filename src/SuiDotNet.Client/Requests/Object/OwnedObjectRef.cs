@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace SuiDotNet.Client.Requests
 {
     [Serializable]
-    public class OwnedObjectReference
+    public class OwnedObjectRef
     {
         [JsonProperty("owner")]
         public ObjectOwner Owner { get; set; }
@@ -12,7 +12,7 @@ namespace SuiDotNet.Client.Requests
         [JsonProperty("reference")]
         public SuiObjectReference Reference { get; set;  }
 
-        public OwnedObjectReference(ObjectOwner owner, SuiObjectReference reference)
+        public OwnedObjectRef(ObjectOwner owner, SuiObjectReference reference)
         {
             Owner = owner;
             Reference = reference;

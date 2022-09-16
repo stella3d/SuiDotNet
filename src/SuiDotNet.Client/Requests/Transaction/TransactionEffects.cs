@@ -13,16 +13,18 @@ namespace SuiDotNet.Client.Requests
         public string TransactionDigest { get; set; }
         
         [JsonProperty("gasObject")]
-        public OwnedObjectReference GasObject { get; set; }
+        public OwnedObjectRef GasObject { get; set; }
         [JsonProperty("gasUsed")]
         public GasCostSummary GasUsed { get; set; }
         
         [JsonProperty("created")]
-        public object[]? Created { get; }
+        public OwnedObjectRef[]? Created { get; }
+        
         [JsonProperty("deleted")]
         public object[]? Deleted { get; }
+        
         [JsonProperty("mutated")]
-        public object[]? Mutated { get; }
+        public OwnedObjectRef[]? Mutated { get; }
         
         [JsonProperty("dependencies")]
         public string[]? Dependencies { get; set; }
@@ -41,11 +43,11 @@ namespace SuiDotNet.Client.Requests
         public TransactionEffects(
             ExecutionStatus status, 
             string digest,
-            OwnedObjectReference gasObject, 
+            OwnedObjectRef gasObject, 
             GasCostSummary gasUsed,
-            object[]? created,
+            OwnedObjectRef[]? created,
             object[]? deleted,
-            object[]? mutated,
+            OwnedObjectRef[]? mutated,
             string[]? dependencies,
             object[]? events,
             SuiObjectReference[]? sharedObjects,
