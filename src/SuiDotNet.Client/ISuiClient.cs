@@ -26,7 +26,7 @@ namespace SuiDotNet.Client
         Task<SequencedTransaction[]> GetTransactionsForObject(string objectId);
 
         Task<ulong> GetTotalTransactionNumber();
-        Task<SequencedTransaction[]> GetRecentTransactions();
+        Task<SequencedTransaction[]> GetRecentTransactions(uint count = 20);
         Task<SequencedTransaction[]> GetTransactionDigestsInRange(ulong start, ulong end);
     }
 }

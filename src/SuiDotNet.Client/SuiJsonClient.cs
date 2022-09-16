@@ -168,9 +168,9 @@ namespace SuiDotNet.Client
             return await _rpcClient.SendRequestAsync<ulong>("sui_getTotalTransactionNumber");
         }
 
-        public async Task<SequencedTransaction[]> GetRecentTransactions()
+        public async Task<SequencedTransaction[]> GetRecentTransactions(uint count = 20)
         {
-            var raw = await _rpcClient.SendRequestAsync<object[][]>("sui_getRecentTransactions");
+            var raw = await _rpcClient.SendRequestAsync<object[][]>("sui_getRecentTransactions", null, count);
             return SequencedTransaction.CastRawSequencedTxes(raw);
         }
 
