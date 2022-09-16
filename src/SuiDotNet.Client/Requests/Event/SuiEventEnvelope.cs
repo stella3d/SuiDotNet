@@ -15,11 +15,13 @@ namespace SuiDotNet.Client.Requests
         [JsonProperty("event")]
         public object Event { get; }
 
-        public SuiEventEnvelope(ulong time, string digest, object evnt)
+        // 'event' is reserved, so disable this warning
+        // ReSharper disable once InconsistentNaming
+        public SuiEventEnvelope(ulong time, string digest, object event_)
         {
             Timestamp = DateTimeOffset.FromUnixTimeMilliseconds((long) time);
             TxDigest = digest;
-            Event = evnt;
+            Event = event_;
         }
     }
 }
