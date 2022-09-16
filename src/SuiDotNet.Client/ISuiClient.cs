@@ -20,7 +20,7 @@ namespace SuiDotNet.Client
         Task<T[]> GetObjects<T>(params string[] objectIds) where T : class;
         Task<object[]> GetObjects(Type objectType, params string[] objectIds);
 
-        Task<object> GetTransactionWithEffects(string txDigest);
+        Task<SuiTransactionResponse> GetTransactionWithEffects(string txDigest);
         Task<SequencedTransaction[]> GetTransactionsForAddress(string address);
         Task<SequencedTransaction[]> GetTransactionsForObject(string objectId);
     }

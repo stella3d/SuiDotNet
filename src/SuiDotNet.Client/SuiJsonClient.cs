@@ -128,12 +128,12 @@ namespace SuiDotNet.Client
                 .ToArray();
         }
 
-        public async Task<object> GetTransactionWithEffects(string txDigest)
+        public async Task<SuiTransactionResponse> GetTransactionWithEffects(string txDigest)
         {
             if (!StringTypes.IsValidSuiTransactionDigest(txDigest))
                 throw new Exception("'txDigest' must be a 44-character base64 string");
             
-            return await _rpcClient.SendRequestAsync<object>("sui_getTransaction", null, txDigest);
+            return await _rpcClient.SendRequestAsync<SuiTransactionResponse>("sui_getTransaction", null, txDigest);
         }
         
         public async Task<SequencedTransaction[]> GetTransactionsForAddress(string address)
