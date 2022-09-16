@@ -25,5 +25,15 @@ namespace SuiDotNet.Client.Requests
             Signature = sig;
             AuthoritySignInfo = signInfo;
         }
+
+        public override string ToString()
+        {
+            return "{\n" +
+                   $"  transactionDigest: {TransactionDigest},\n" +
+                   $"  data: {Data},\n" +
+                   $"  txSignature: {Signature},\n" +
+                   $"  authSignInfo: {AuthoritySignInfo}\n" +
+                   "}";
+        }
     }
 }
