@@ -11,7 +11,7 @@ namespace SuiDotNet.Client.Requests
         [JsonProperty("transferObject")] public TransferObjectEvent? TransferObject { get; set; }
         [JsonProperty("deleteObject")] public DeleteObjectEvent? DeleteObject { get; set; }
         [JsonProperty("newObject")] public NewObjectEvent? NewObject { get; set; }
-        [JsonProperty("epochChange")] public object? EpochChange { get; set; }
+        [JsonProperty("epochChange")] public ulong? EpochChange { get; set; }
         [JsonProperty("checkpoint")] public ulong? Checkpoint { get; set; }
     }
 }
