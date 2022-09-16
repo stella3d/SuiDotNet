@@ -32,6 +32,18 @@ namespace SuiDotNet.Client
             if (!IsValidSuiTransactionDigest(str))
                 throw new ArgumentException(TxDigestErrMsg, argName);
         }
+        
+        internal static void ThrowIfNotSuiAddress(string str, string argName = "address")
+        {
+            if (!IsValidSuiAddress(str))
+                throw new ArgumentException("must be a 20 byte hex string", argName);
+        }
+
+        internal static void ThrowIfNotObjectId(string str, string argName = "objectId")
+        {
+            if (!IsValidSuiObjectId(str))
+                throw new ArgumentException("must be a hex string between 1-20 bytes", argName);
+        }
 
     }
 }

@@ -180,8 +180,7 @@ namespace SuiDotNet.Client
 
         public async Task<SequencedTransaction[]> GetTransactionsForObject(string objectId)
         {
-            if (!StringTypes.IsValidSuiObjectId(objectId))
-                throw new ArgumentException("must be a hex string between 1-20 bytes", nameof(objectId));
+            StringTypes.ThrowIfNotObjectId(objectId);
             
             var tasks = new Task<object[][]>[2];
             tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByInputObject", null, objectId);
@@ -220,6 +219,7 @@ namespace SuiDotNet.Client
         {
             StringTypes.ThrowIfNotTxDigest(txDigest);
             LimitEventCount(ref count); 
+            
             return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsByTransaction", null, txDigest, count);
         }
@@ -231,6 +231,8 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue)
         {
+            LimitEventCount(ref count);
+            
             throw new NotImplementedException();
         }
 
@@ -240,6 +242,8 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue)
         {
+            LimitEventCount(ref count); 
+
             throw new NotImplementedException();
         }
 
@@ -249,6 +253,9 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue)
         {
+            StringTypes.ThrowIfNotSuiAddress(senderAddress);
+            LimitEventCount(ref count); 
+
             throw new NotImplementedException();
         }
 
@@ -258,6 +265,8 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue)
         {
+            LimitEventCount(ref count); 
+
             throw new NotImplementedException();
         }
 
@@ -267,6 +276,9 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue)
         {
+            StringTypes.ThrowIfNotObjectId(objectId);
+            LimitEventCount(ref count); 
+            
             throw new NotImplementedException();
         }
 
@@ -275,6 +287,8 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue)
         {
+            LimitEventCount(ref count); 
+            
             throw new NotImplementedException();
         }
     }
