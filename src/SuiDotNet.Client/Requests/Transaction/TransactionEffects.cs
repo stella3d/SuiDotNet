@@ -21,7 +21,7 @@ namespace SuiDotNet.Client.Requests
         public OwnedObjectRef[]? Created { get; }
         
         [JsonProperty("deleted")]
-        public object[]? Deleted { get; }
+        public SuiObjectReference[]? Deleted { get; }
         
         [JsonProperty("mutated")]
         public OwnedObjectRef[]? Mutated { get; }
@@ -46,7 +46,7 @@ namespace SuiDotNet.Client.Requests
             OwnedObjectRef gasObject, 
             GasCostSummary gasUsed,
             OwnedObjectRef[]? created,
-            object[]? deleted,
+            SuiObjectReference[]? deleted,
             OwnedObjectRef[]? mutated,
             string[]? dependencies,
             object[]? events,
