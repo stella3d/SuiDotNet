@@ -20,5 +20,10 @@ namespace SuiDotNet.Client.Requests
             Digest = digest;
             Version = version;
         }
+        
+        public override string ToString()
+        {
+            return $"{{\n  objectId: {ObjectId},\n  digest: {Digest},\n  version: {Version}\n}}";
+        }
     }
 }

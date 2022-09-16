@@ -17,5 +17,10 @@ namespace SuiDotNet.Client.Requests
             Status = status;
             Error = error;
         }
+
+        public override string ToString()
+        {
+            return Error != null ? $"{{ status: {Status}, error: {Error} }}" : $"{{ status: {Status} }}";
+        }
     }
 }

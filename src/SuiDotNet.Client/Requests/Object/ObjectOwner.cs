@@ -19,5 +19,10 @@ namespace SuiDotNet.Client.Requests
             Type = type;
             Address = address;
         }
+        
+        public override string ToString()
+        {
+            return $"{{\n  type: {Type},\n  address: {Address}\n}}";
+        }
     }
 }
