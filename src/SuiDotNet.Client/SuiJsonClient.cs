@@ -150,7 +150,20 @@ namespace SuiDotNet.Client
             return CombineRawTxSequences(tasks);
         }
 
-        SequencedTransaction[] CombineRawTxSequences(Task<object[][]>[] tasks)
+        public async Task<SequencedTransaction[]> GetTransactionsForObject(string objectId)
+        {
+            if (!StringTypes.IsValidSuiObjectId(objectId))
+                throw new Exception("'objectId' must be a hex string between 1-20 bytes");
+            
+            var tasks = new Task<object[][]>[2];
+            tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByInputObject", null, objectId);
+            tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByMutatedObject", null, objectId);
+            await Task.WhenAll(tasks);
+            
+            return CombineRawTxSequences(tasks);
+        }
+        
+        static SequencedTransaction[] CombineRawTxSequences(Task<object[][]>[] tasks)
         {
             var resultCount = 0;
             foreach (var t in tasks)
@@ -170,16 +183,6 @@ namespace SuiDotNet.Client
             }
 
             return results;
-        }
-
-        public async Task<SequencedTransaction[]> GetTransactionsForObject(string objectId)
-        {
-            var tasks = new Task<object[][]>[2];
-            tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByInputObject", null, objectId);
-            tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByMutatedObject", null, objectId);
-            await Task.WhenAll(tasks);
-            
-            return CombineRawTxSequences(tasks);
         }
     }
 }
