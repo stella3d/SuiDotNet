@@ -223,5 +223,59 @@ namespace SuiDotNet.Client
             return await _rpcClient.SendRequestAsync<object[]>
                 ("sui_getEventsByTransaction", null, txDigest, count);
         }
+
+        public async Task<object[]> GetEventsByModule(
+            string package,
+            string module,
+            uint count = EventQueryMaxLimit,
+            ulong startTime = 0,
+            ulong endTime = ulong.MaxValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<object[]> GetEventsByMoveEventStructName(
+            string moveEventStructName,
+            uint count = EventQueryMaxLimit,
+            ulong startTime = 0,
+            ulong endTime = ulong.MaxValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<object[]> GetEventsBySender(
+            string senderAddress,
+            uint count = EventQueryMaxLimit,
+            ulong startTime = 0,
+            ulong endTime = ulong.MaxValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<object[]> GetEventsByRecipient(
+            ObjectOwner recipient,
+            uint count = EventQueryMaxLimit,
+            ulong startTime = 0,
+            ulong endTime = ulong.MaxValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<object[]> GetEventsByObject(
+            string objectId,
+            uint count = EventQueryMaxLimit,
+            ulong startTime = 0,
+            ulong endTime = ulong.MaxValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<object[]> GetEventsByTimeRange(
+            uint count = EventQueryMaxLimit,
+            ulong startTime = 0,
+            ulong endTime = ulong.MaxValue)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
