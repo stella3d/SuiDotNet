@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace SuiDotNet.Client.Requests
@@ -7,7 +8,7 @@ namespace SuiDotNet.Client.Requests
     public class SuiTransactionResponse
     {
         [JsonProperty("certificate")]
-        public object Certificate { get; set; }
+        public CertifiedTransaction Certificate { get; set; }
         
         [JsonProperty("effects")]
         public TransactionEffects Effects { get; set; }
@@ -18,7 +19,23 @@ namespace SuiDotNet.Client.Requests
         [JsonProperty("timestamp_ms")]
         public ulong? Timestamp { get; set; }
     }
-    
+
+    [Serializable]
+    public class CertifiedTransaction
+    {
+        [JsonProperty("transactionDigest")]
+        public string TransactionDigest { get; set; }
+
+        [JsonProperty("data")]
+        public object Data { get; set; }
+        
+        [JsonProperty("txSignature")]
+        public string Signature { get; set; }
+        
+        [JsonProperty("authSignInfo")]
+        public AuthorityQuorumSignInfo AuthoritySignInfo { get; set; }
+    }
+
     public class SuiParsedTransactionResponse
     {
         public object? Publish;
@@ -69,5 +86,26 @@ namespace SuiDotNet.Client.Requests
         public string Status { get; set; }
         [JsonProperty("error")]
         public string? Error { get; set; }
+    }
+    
+    [Serializable]
+    public class AuthorityQuorumSignInfo
+    {
+        [JsonProperty("epoch")]
+        public ulong Epoch { get; set; }
+        
+        [JsonProperty("signature")]
+        public string[] Signature { get; set; }
+
+        // TODO - this encoding needs to be changed to base64 string instead of byte array on sui side
+        [JsonProperty("signers_map")]
+        public byte[] SignersMap { get; set; }
+
+        public override string ToString()
+        {
+            var sigLines = $"[\n\t{string.Join("\n\t", Signature)}\n]";
+            var mapLine = $"[{string.Join(',', SignersMap)}]";
+            return $"epoch: {Epoch},\nsignature: {sigLines},\nsignersMap: {mapLine}";
+        }
     }
 }
