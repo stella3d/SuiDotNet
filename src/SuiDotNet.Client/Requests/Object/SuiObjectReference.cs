@@ -6,15 +6,16 @@ namespace SuiDotNet.Client.Requests
     [Serializable]
     public class SuiObjectReference
     {
-        [JsonProperty("objectId")]
+        [JsonProperty("objectId", Required = Required.Always)]
         public string ObjectId { get; }
-        [JsonProperty("digest")]
+        
+        [JsonProperty("digest", Required = Required.Always)]
         public string Digest { get; }
         
-        [JsonProperty("version", Required = Required.DisallowNull)]
-        public ulong? Version { get; }
+        [JsonProperty("version", Required = Required.Always)]
+        public ulong Version { get; }
 
-        public SuiObjectReference(string objectId, string digest, ulong? version)
+        public SuiObjectReference(string objectId, string digest, ulong version)
         {
             ObjectId = objectId;
             Digest = digest;
