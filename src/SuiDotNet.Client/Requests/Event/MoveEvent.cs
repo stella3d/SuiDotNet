@@ -7,13 +7,13 @@ namespace SuiDotNet.Client.Requests
     public class MoveEvent<T>: BaseEvent
     {
         [JsonProperty("type")]
-        public string Type { get; }
+        public string Type { get; set; }
         
         [JsonProperty("fields")]
-        public T Fields { get; }
+        public T Fields { get; set; }
         
         [JsonProperty("bcs")]
-        public string Bcs { get; }
+        public string Bcs { get; set; }
         
         public MoveEvent(string packageId, string transactionModule, string sender, string type, T fields, string bcs)
             : base(packageId, transactionModule, sender)

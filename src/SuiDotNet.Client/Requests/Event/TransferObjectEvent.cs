@@ -7,16 +7,16 @@ namespace SuiDotNet.Client.Requests
     public class TransferObjectEvent: BaseEvent
     {
         [JsonProperty("recipient")]
-        public ObjectOwner Recipient { get; }
+        public ObjectOwner Recipient { get; set; }
         
         [JsonProperty("objectId")]
-        public string ObjectId { get; }
+        public string ObjectId { get; set; }
         
         [JsonProperty("type")]
-        public string Type { get; }
+        public string Type { get; set; }
         
         [JsonProperty("version")]
-        public ulong Version { get; }
+        public ulong Version { get; set; }
         
         public TransferObjectEvent(
             string packageId,

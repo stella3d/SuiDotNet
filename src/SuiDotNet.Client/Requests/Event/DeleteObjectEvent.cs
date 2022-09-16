@@ -7,7 +7,7 @@ namespace SuiDotNet.Client.Requests
     public class DeleteObjectEvent: BaseEvent
     {
         [JsonProperty("objectId")]
-        public string ObjectId { get; }
+        public string ObjectId { get; set; }
         
         public DeleteObjectEvent(string packageId, string transactionModule, string sender, string objId)
             : base(packageId, transactionModule, sender)

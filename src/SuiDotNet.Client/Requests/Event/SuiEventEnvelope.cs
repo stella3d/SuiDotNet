@@ -7,13 +7,13 @@ namespace SuiDotNet.Client.Requests
     public class BaseEventEnvelope<TTime, TEvent>
     {
         [JsonProperty("timestamp")]
-        public TTime Timestamp { get; }
+        public TTime Timestamp { get; set; }
         
         [JsonProperty("txDigest")]
-        public string TxDigest { get; }
+        public string TxDigest { get; set; }
         
         [JsonProperty("event")]
-        public TEvent Event { get; }
+        public TEvent Event { get; set; }
 
         // 'event' is reserved, so disable this warning
         // ReSharper disable InconsistentNaming
@@ -47,13 +47,13 @@ namespace SuiDotNet.Client.Requests
     public class RawSuiEventEnvelope/*: BaseEventEnvelope<ulong, object>*/
     {
         [JsonProperty("timestamp")]
-        public ulong Timestamp { get; }
+        public ulong Timestamp { get; set; }
         
         [JsonProperty("txDigest")]
-        public string TxDigest { get; }
+        public string TxDigest { get; set; }
         
         [JsonProperty("event")]
-        public object Event { get; }
+        public object Event { get; set; }
 
         public RawSuiEventEnvelope(ulong time, string digest, object event_)
             /*: base(time, digest, event_)*/

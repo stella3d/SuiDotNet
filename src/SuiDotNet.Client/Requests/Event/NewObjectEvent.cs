@@ -21,10 +21,10 @@ namespace SuiDotNet.Client.Requests
     public class NewObjectEvent: BaseEvent
     {
         [JsonProperty("recipient")]
-        public ObjectOwner Recipient { get; }
+        public ObjectOwner Recipient { get; set; }
         
         [JsonProperty("objectId")]
-        public string ObjectId { get; }
+        public string ObjectId { get; set; }
         
         public NewObjectEvent(string packageId, string transactionModule, string sender, ObjectOwner recipient, string objId)
             : base(packageId, transactionModule, sender)

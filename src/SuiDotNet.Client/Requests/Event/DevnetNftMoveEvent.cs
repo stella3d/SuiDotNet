@@ -7,13 +7,13 @@ namespace SuiDotNet.Client.Requests
     public class DevnetNftFields
     {
         [JsonProperty("creator")]
-        public string Creator { get; }
+        public string Creator { get; set; }
         
         [JsonProperty("name")]
-        public string Name { get; }
+        public string Name { get; set; }
         
         [JsonProperty("objectId")]
-        public string ObjectId { get; }
+        public string ObjectId { get; set; }
 
         public DevnetNftFields(string creator, string name, string objectId)
         {
