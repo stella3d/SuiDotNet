@@ -208,11 +208,20 @@ namespace SuiDotNet.Client
                 ("sui_getTransactionsInRange", null, start, end);
             return SequencedTransaction.CastRawSequencedTxes(raw);
         }
-        
-        public async Task<object[]> GetEventsByTransaction(string txDigest)
+
+
+        internal const uint EventQueryMaxLimit = 100;
+        static void LimitEventCount(ref uint input)
+        {
+            input = input < EventQueryMaxLimit ? input : EventQueryMaxLimit;
+        }
+
+        public async Task<object[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
         {
             StringTypes.ThrowIfNotTxDigest(txDigest);
-            return await _rpcClient.SendRequestAsync<object[]>("sui_getEventsByTransaction", null, txDigest);
+            LimitEventCount(ref count); 
+            return await _rpcClient.SendRequestAsync<object[]>
+                ("sui_getEventsByTransaction", null, txDigest, count);
         }
     }
 }

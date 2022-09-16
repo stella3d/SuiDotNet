@@ -32,6 +32,6 @@ namespace SuiDotNet.Client
         Task<SequencedTransaction[]> GetTransactionDigestsInRange(ulong start, ulong end);
         
         // sui_getEvent* RPC methods
-        Task<object[]> GetEventsByTransaction(string txDigest);
+        Task<object[]> GetEventsByTransaction(string txDigest, uint count = SuiJsonClient.EventQueryMaxLimit);
     }
 }
