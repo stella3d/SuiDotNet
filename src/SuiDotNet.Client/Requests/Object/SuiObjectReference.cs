@@ -10,11 +10,15 @@ namespace SuiDotNet.Client.Requests
         public string ObjectId { get; }
         [JsonProperty("digest")]
         public string Digest { get; }
+        
+        [JsonProperty("version", Required = Required.DisallowNull)]
+        public ulong? Version { get; }
 
-        public SuiObjectReference(string objectId, string digest)
+        public SuiObjectReference(string objectId, string digest, ulong? version)
         {
             ObjectId = objectId;
             Digest = digest;
+            Version = version;
         }
     }
 }

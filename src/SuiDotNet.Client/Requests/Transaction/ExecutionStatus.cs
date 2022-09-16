@@ -6,7 +6,7 @@ namespace SuiDotNet.Client.Requests
     [Serializable]
     public class ExecutionStatus
     {
-        [JsonProperty("status")]
+        [JsonProperty("status", Required = Required.Always)]
         public string Status { get; }
         
         [JsonProperty("error")]

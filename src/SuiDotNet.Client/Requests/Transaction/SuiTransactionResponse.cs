@@ -6,23 +6,23 @@ namespace SuiDotNet.Client.Requests
     [Serializable]
     public class SuiTransactionResponse
     {
-        [JsonProperty("certificate")]
-        public CertifiedTransaction Certificate { get; }
+        [JsonProperty("certificate", Required = Required.Always)]
+        public object Certificate { get; set; }
         
-        [JsonProperty("effects")]
-        public TransactionEffects Effects { get; }
+        [JsonProperty("effects", Required = Required.Always)]
+        public object Effects { get; }
         
-        [JsonProperty("parsed_data")]
-        public SuiParsedTransactionResponse? ParsedData { get; }
+        [JsonProperty("parsed_data", Required = Required.AllowNull)]
+        public SuiParsedTransactionResponse? ParsedData { get; set; }
         
         [JsonProperty("timestamp_ms")]
-        public ulong? Timestamp { get; }
+        public ulong? Timestamp { get; set;}
         
         public SuiTransactionResponse(
-            CertifiedTransaction cert,
-            TransactionEffects effects,
-            SuiParsedTransactionResponse? parsed = null,
-            ulong? time = null)
+            object cert,
+            object effects,
+            SuiParsedTransactionResponse? parsed,
+            ulong? time)
         {
             Certificate = cert;
             Effects = effects;

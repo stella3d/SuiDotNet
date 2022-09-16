@@ -13,7 +13,7 @@ namespace SuiDotNet.Client.Requests
         public string TransactionDigest { get; }
         
         [JsonProperty("gasObject")]
-        public SuiObjectReference GasObject { get; }
+        public object GasObject { get; }
         [JsonProperty("gasUsed")]
         public object GasUsed { get; }
         
@@ -41,7 +41,7 @@ namespace SuiDotNet.Client.Requests
         public TransactionEffects(
             ExecutionStatus status, 
             string digest,
-            SuiObjectReference gas, 
+            object gas, 
             object gasUsed,
             object[]? created = null,
             object[]? deleted = null,

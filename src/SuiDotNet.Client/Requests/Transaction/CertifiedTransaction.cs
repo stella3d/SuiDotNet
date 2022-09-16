@@ -10,7 +10,7 @@ namespace SuiDotNet.Client.Requests
         public string TransactionDigest { get; }
 
         [JsonProperty("data")]
-        public TransactionData Data { get; }
+        public object Data { get; }
         
         [JsonProperty("txSignature")]
         public string Signature { get; }
@@ -18,7 +18,7 @@ namespace SuiDotNet.Client.Requests
         [JsonProperty("authSignInfo")]
         public AuthorityQuorumSignInfo AuthoritySignInfo { get; }
         
-        public CertifiedTransaction(string digest, TransactionData data, string sig, AuthorityQuorumSignInfo signInfo)
+        public CertifiedTransaction(string digest, object data, string sig, AuthorityQuorumSignInfo signInfo)
         {
             TransactionDigest = digest;
             Data = data;
