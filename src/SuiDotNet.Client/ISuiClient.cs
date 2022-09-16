@@ -20,8 +20,13 @@ namespace SuiDotNet.Client
         Task<T[]> GetObjects<T>(params string[] objectIds) where T : class;
         Task<object[]> GetObjects(Type objectType, params string[] objectIds);
 
+        // sui_getTransaction* RPC methods
         Task<SuiTransactionResponse> GetTransactionWithEffects(string txDigest);
         Task<SequencedTransaction[]> GetTransactionsForAddress(string address);
         Task<SequencedTransaction[]> GetTransactionsForObject(string objectId);
+
+        Task<ulong> GetTotalTransactionNumber();
+        Task<SequencedTransaction[]> GetRecentTransactions();
+        Task<SequencedTransaction[]> GetTransactionDigestsInRange(ulong start, ulong end);
     }
 }

@@ -147,7 +147,7 @@ namespace SuiDotNet.Client
             tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsFromAddress", null, address);
             await Task.WhenAll(tasks);
             
-            return CombineRawTxSequences(tasks);
+            return SequencedTransaction.CombineRawTxSequences(tasks);
         }
 
         public async Task<SequencedTransaction[]> GetTransactionsForObject(string objectId)
@@ -160,29 +160,25 @@ namespace SuiDotNet.Client
             tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByMutatedObject", null, objectId);
             await Task.WhenAll(tasks);
             
-            return CombineRawTxSequences(tasks);
+            return SequencedTransaction.CombineRawTxSequences(tasks);
         }
         
-        static SequencedTransaction[] CombineRawTxSequences(Task<object[][]>[] tasks)
+        public async Task<ulong> GetTotalTransactionNumber()
         {
-            var resultCount = 0;
-            foreach (var t in tasks)
-                resultCount += t.Result.Length;
+            return await _rpcClient.SendRequestAsync<ulong>("sui_getTotalTransactionNumber");
+        }
 
-            var results = new SequencedTransaction[resultCount];
-            var resultIndex = 0;
-            foreach (var t in tasks)
-            {
-                foreach (var tx in t.Result)
-                {
-                    var seq = Convert.ToUInt64(tx[0]);
-                    var digest = (string) tx[1];
-                    results[resultIndex] = new SequencedTransaction { SequenceNumber = seq, Digest = digest };
-                    resultIndex++;
-                }
-            }
+        public async Task<SequencedTransaction[]> GetRecentTransactions()
+        {
+            var raw = await _rpcClient.SendRequestAsync<object[][]>("sui_getRecentTransactions");
+            return SequencedTransaction.CastRawSequencedTxes(raw);
+        }
 
-            return results;
+        public async Task<SequencedTransaction[]> GetTransactionDigestsInRange(ulong start, ulong end)
+        {
+            var raw = await _rpcClient.SendRequestAsync<object[][]>
+                ("sui_getTransactionsInRange", null, start, end);
+            return SequencedTransaction.CastRawSequencedTxes(raw);
         }
     }
 }
