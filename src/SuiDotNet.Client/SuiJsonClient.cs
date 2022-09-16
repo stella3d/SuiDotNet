@@ -81,7 +81,7 @@ namespace SuiDotNet.Client
         {
             if (!objectIds.Any())
                 return Array.Empty<SuiObject>();
-
+            
             var request = new SuiGetObject(_rpcClient);
 
             var batchRequest = new RpcRequestResponseBatch();
@@ -132,7 +132,7 @@ namespace SuiDotNet.Client
         public async Task<SuiTransactionResponse> GetTransactionWithEffects(string txDigest)
         {
             if (!StringTypes.IsValidSuiTransactionDigest(txDigest))
-                throw new Exception("'txDigest' must be a 44-character base64 string");
+                throw new ArgumentException("must be a 44-character base64 string", nameof(txDigest));
             
             return await _rpcClient.SendRequestAsync<SuiTransactionResponse>("sui_getTransaction", null, txDigest);
         }
@@ -141,6 +141,8 @@ namespace SuiDotNet.Client
         {
             if (!txDigests.Any())
                 return Array.Empty<SuiTransactionResponse>();
+            if (!txDigests.All(StringTypes.IsValidSuiTransactionDigest))
+                throw new ArgumentException("must all be 44-character base64 strings", nameof(txDigests));
 
             var request = new SuiGetTransaction(_rpcClient);
             var batchRequest = new RpcRequestResponseBatch();
@@ -167,7 +169,7 @@ namespace SuiDotNet.Client
         public async Task<SequencedTransaction[]> GetTransactionsForAddress(string address)
         {
             if (!StringTypes.IsValidSuiAddress(address))
-                throw new Exception("'address' must be a 20-byte hex string");
+                throw new ArgumentException("must be a 20-byte hex string", nameof(address));
             
             var tasks = new Task<object[][]>[2];
             // it's much easier to deserialize mixed-type JSON arrays as object[], then cast them after
@@ -181,7 +183,7 @@ namespace SuiDotNet.Client
         public async Task<SequencedTransaction[]> GetTransactionsForObject(string objectId)
         {
             if (!StringTypes.IsValidSuiObjectId(objectId))
-                throw new Exception("'objectId' must be a hex string between 1-20 bytes");
+                throw new ArgumentException("must be a hex string between 1-20 bytes", nameof(objectId));
             
             var tasks = new Task<object[][]>[2];
             tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByInputObject", null, objectId);
