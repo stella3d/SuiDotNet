@@ -130,25 +130,37 @@ namespace SuiDotNet.Client
 
         public async Task<object> GetTransactionWithEffects(string txDigest)
         {
+            if (!StringTypes.IsValidSuiTransactionDigest(txDigest))
+                throw new Exception("'txDigest' must be a 44-character base64 string");
+            
             return await _rpcClient.SendRequestAsync<object>("sui_getTransaction", null, txDigest);
         }
         
         public async Task<SequencedTransaction[]> GetTransactionsForAddress(string address)
         {
             if (!StringTypes.IsValidSuiAddress(address))
-                throw new Exception("'address' must be a 20-byte hex string starting with 0x");
+                throw new Exception("'address' must be a 20-byte hex string");
             
             var tasks = new Task<object[][]>[2];
+            // it's much easier to deserialize mixed-type JSON arrays as object[], then cast them after
             tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsToAddress", null, address);
             tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsFromAddress", null, address);
             await Task.WhenAll(tasks);
+            
+            return CombineRawTxSequences(tasks);
+        }
 
-            var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
+        SequencedTransaction[] CombineRawTxSequences(Task<object[][]>[] tasks)
+        {
+            var resultCount = 0;
+            foreach (var t in tasks)
+                resultCount += t.Result.Length;
+
             var results = new SequencedTransaction[resultCount];
             var resultIndex = 0;
-            for (var i = 0; i <= 1; i++)
+            foreach (var t in tasks)
             {
-                foreach (var tx in tasks[i].Result)
+                foreach (var tx in t.Result)
                 {
                     var seq = Convert.ToUInt64(tx[0]);
                     var digest = (string) tx[1];
@@ -156,6 +168,7 @@ namespace SuiDotNet.Client
                     resultIndex++;
                 }
             }
+
             return results;
         }
 
@@ -165,22 +178,8 @@ namespace SuiDotNet.Client
             tasks[0] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByInputObject", null, objectId);
             tasks[1] = _rpcClient.SendRequestAsync<object[][]>("sui_getTransactionsByMutatedObject", null, objectId);
             await Task.WhenAll(tasks);
-
-            var resultCount = tasks[0].Result.Length + tasks[1].Result.Length;
-            var results = new SequencedTransaction[resultCount];
-            var resultIndex = 0;
-            for (var i = 0; i <= 1; i++)
-            {
-                foreach (var tx in tasks[i].Result)
-                {
-                    var seq = Convert.ToUInt64(tx[0]);
-                    var digest = (string) tx[1];
-                    results[resultIndex] = new SequencedTransaction { SequenceNumber = seq, Digest = digest };
-                    resultIndex++;
-                }
-            }
-
-            return results;
+            
+            return CombineRawTxSequences(tasks);
         }
     }
 }
