@@ -1,7 +1,9 @@
+using System;
 using Newtonsoft.Json;
 
 namespace SuiDotNet.Client.Requests
 {
+    [Serializable]
     public class SuiTransactionResponse
     {
         [JsonProperty("certificate")]
@@ -11,10 +13,10 @@ namespace SuiDotNet.Client.Requests
         public TransactionEffects Effects { get; set; }
         
         [JsonProperty("parsed_data")]
-        public SuiParsedTransactionResponse ParsedData { get; set; }
+        public SuiParsedTransactionResponse? ParsedData { get; set; }
         
         [JsonProperty("timestamp_ms")]
-        public ulong Timestamp { get; set; }
+        public ulong? Timestamp { get; set; }
     }
     
     public class SuiParsedTransactionResponse
@@ -24,6 +26,7 @@ namespace SuiDotNet.Client.Requests
         public object? SplitCoin;
     }
     
+    [Serializable]
     public class TransactionEffects
     {
         [JsonProperty("status")]
@@ -59,6 +62,7 @@ namespace SuiDotNet.Client.Requests
         public SuiObjectReference[]? Unwrapped { get; set; }
     }
 
+    [Serializable]
     public class ExecutionStatus
     {
         [JsonProperty("status")]

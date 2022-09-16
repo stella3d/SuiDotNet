@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace SuiDotNet.Client.Requests
 {
+    [Serializable]
     public class SuiObjectReference
     {
         [JsonProperty("objectId")]
