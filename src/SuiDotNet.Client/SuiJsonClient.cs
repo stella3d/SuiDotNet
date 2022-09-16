@@ -216,17 +216,15 @@ namespace SuiDotNet.Client
             input = input < EventQueryMaxLimit ? input : EventQueryMaxLimit;
         }
 
-        public async Task<SuiEventEnvelope[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
+        public async Task<object[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
         {
             StringTypes.ThrowIfNotTxDigest(txDigest);
             LimitEventCount(ref count);
 
-            var raw = await _rpcClient.SendRequestAsync<RawSuiEventEnvelope[]>
+            var asObjects = await _rpcClient.SendRequestAsync<object[]>
                 ("sui_getEventsByTransaction", null, txDigest, count);
 
-            return raw
-                .Select(r => new SuiEventEnvelope(r))
-                .ToArray();
+            return asObjects;
         }
 
         public async Task<SuiEventEnvelope[]> GetEventsByModule(
@@ -275,7 +273,7 @@ namespace SuiDotNet.Client
             throw new NotImplementedException();
         }
 
-        public async Task<SuiEventEnvelope[]> GetEventsByObject(
+        public async Task<object[]> GetEventsByObject(
             string objectId,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -284,17 +282,26 @@ namespace SuiDotNet.Client
             StringTypes.ThrowIfNotObjectId(objectId);
             LimitEventCount(ref count); 
             
-            throw new NotImplementedException();
+            var raw = await _rpcClient.SendRequestAsync<object[]>
+                ("sui_getEventsByObject", null, objectId, count, startTime, endTime);
+
+            return raw;
         }
 
-        public async Task<SuiEventEnvelope[]> GetEventsByTimeRange(
+        public async Task<object[]> GetEventsByTimeRange(
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = ulong.MaxValue)
+            ulong endTime = long.MaxValue)
         {
             LimitEventCount(ref count); 
             
-            throw new NotImplementedException();
+            var raw = await _rpcClient.SendRequestAsync<object[]>
+                ("sui_getEventsByTimeRange", null, count, startTime, endTime);
+
+            return raw;/*
+                .Select(r => new SuiEventEnvelope(r))
+                .ToArray();
+            */
         }
     }
 }

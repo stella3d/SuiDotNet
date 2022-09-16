@@ -36,13 +36,37 @@ namespace SuiDotNet.Client.Requests
                 DateTimeOffset.FromUnixTimeMilliseconds((long) raw.Timestamp),
                 raw.TxDigest,
                 raw.Event) { }
+        
+        public override string ToString()
+        {
+            return $"{{\n\ttimestamp: {Timestamp},\n\ttxDigest: {TxDigest},\n\tevent: {Event}\n}}";
+        }
     }
     
     [Serializable]
-    public class RawSuiEventEnvelope: BaseEventEnvelope<ulong, object>
+    public class RawSuiEventEnvelope/*: BaseEventEnvelope<ulong, object>*/
     {
+        [JsonProperty("timestamp")]
+        public ulong Timestamp { get; }
+        
+        [JsonProperty("txDigest")]
+        public string TxDigest { get; }
+        
+        [JsonProperty("event")]
+        public object Event { get; }
+
         public RawSuiEventEnvelope(ulong time, string digest, object event_)
-            : base(time, digest, event_) { }
+            /*: base(time, digest, event_)*/
+        {
+            Timestamp = time;
+            TxDigest = digest;
+            Event = event_;
+        }
+        
+        public override string ToString()
+        {
+            return $"{{\n\ttimestamp: {Timestamp},\n\ttxDigest: {TxDigest},\n\tevent: {Event}\n}}";
+        }
     }
     
     // ReSharper enable InconsistentNaming

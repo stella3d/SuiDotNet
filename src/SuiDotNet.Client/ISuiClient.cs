@@ -32,7 +32,7 @@ namespace SuiDotNet.Client
         Task<SequencedTransaction[]> GetTransactionDigestsInRange(ulong start, ulong end);
         
         // sui_getEvent* RPC methods
-        Task<SuiEventEnvelope[]> GetEventsByTransaction(string txDigest, uint count = SuiJsonClient.EventQueryMaxLimit);
+        Task<object[]> GetEventsByTransaction(string txDigest, uint count = SuiJsonClient.EventQueryMaxLimit);
 
         Task<SuiEventEnvelope[]> GetEventsByModule(
             string package,
@@ -59,15 +59,15 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<SuiEventEnvelope[]> GetEventsByObject(
+        Task<object[]> GetEventsByObject(
             string objectId,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<SuiEventEnvelope[]> GetEventsByTimeRange(
+        Task<object[]> GetEventsByTimeRange(
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = ulong.MaxValue);
+            ulong endTime = long.MaxValue);
     }
 }
