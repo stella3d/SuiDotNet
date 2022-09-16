@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace SuiDotNet.Client.Requests
@@ -27,13 +26,35 @@ namespace SuiDotNet.Client.Requests
         public string TransactionDigest { get; set; }
 
         [JsonProperty("data")]
-        public object Data { get; set; }
+        public TransactionData Data { get; set; }
         
         [JsonProperty("txSignature")]
         public string Signature { get; set; }
         
         [JsonProperty("authSignInfo")]
         public AuthorityQuorumSignInfo AuthoritySignInfo { get; set; }
+    }
+    
+    [Serializable]
+    public class TransactionData
+    {
+        [JsonProperty("gasBudget")]
+        public ulong GasBudget { get; set; }
+        [JsonProperty("gasPayment")]
+        public SuiObjectReference GasPayment { get; set; }
+
+        [JsonProperty("sender")]
+        public string Sender { get; set; }
+        
+        [JsonProperty("transactions")]
+        public object[] Transactions { get; set; }
+
+        public override string ToString()
+        {
+            var paymentLines = $"\ngas payment: {{\n\ttx: {GasPayment.Digest}\n\tobjId: {GasPayment.ObjectId}\n}}";
+            var txes = string.Join(",\n", Transactions);
+            return $"gas budget: {GasBudget},{paymentLines}\ntransactions: [\n\t{txes}\n]";
+        }
     }
 
     public class SuiParsedTransactionResponse
