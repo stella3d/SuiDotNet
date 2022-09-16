@@ -210,6 +210,7 @@ namespace SuiDotNet.Client
         }
 
 
+        internal const ulong JsNumberMaxSafeInteger = 9007199254740991;
         internal const uint EventQueryMaxLimit = 100;
         static void LimitEventCount(ref uint input)
         {
@@ -232,7 +233,7 @@ namespace SuiDotNet.Client
             string module,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = ulong.MaxValue)
+            ulong endTime = JsNumberMaxSafeInteger)
         {
             LimitEventCount(ref count);
             
@@ -243,7 +244,7 @@ namespace SuiDotNet.Client
             string moveEventStructName,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = ulong.MaxValue)
+            ulong endTime = JsNumberMaxSafeInteger)
         {
             LimitEventCount(ref count); 
 
@@ -254,7 +255,7 @@ namespace SuiDotNet.Client
             string senderAddress,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = ulong.MaxValue)
+            ulong endTime = JsNumberMaxSafeInteger)
         {
             StringTypes.ThrowIfNotSuiAddress(senderAddress);
             LimitEventCount(ref count); 
@@ -266,7 +267,7 @@ namespace SuiDotNet.Client
             ObjectOwner recipient,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = ulong.MaxValue)
+            ulong endTime = JsNumberMaxSafeInteger)
         {
             LimitEventCount(ref count); 
 
@@ -277,7 +278,7 @@ namespace SuiDotNet.Client
             string objectId,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = ulong.MaxValue)
+            ulong endTime = JsNumberMaxSafeInteger)
         {
             StringTypes.ThrowIfNotObjectId(objectId);
             LimitEventCount(ref count); 
@@ -291,7 +292,7 @@ namespace SuiDotNet.Client
         public async Task<object[]> GetEventsByTimeRange(
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
-            ulong endTime = long.MaxValue)
+            ulong endTime = JsNumberMaxSafeInteger)
         {
             LimitEventCount(ref count); 
             
