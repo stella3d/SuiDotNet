@@ -5,6 +5,8 @@
         Unknown,
         Address,
         Object,
-        Shared
+        Single,
+        Shared,
+        Immutable
     }
 }

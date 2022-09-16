@@ -34,26 +34,26 @@ namespace SuiDotNet.Client
         // sui_getEvent* RPC methods
         Task<object[]> GetEventsByTransaction(string txDigest, uint count = SuiJsonClient.EventQueryMaxLimit);
 
-        Task<SuiEventEnvelope[]> GetEventsByModule(
+        Task<object[]> GetEventsByModule(
             string package,
             string module,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<SuiEventEnvelope[]> GetEventsByMoveEventStructName(
+        Task<object[]> GetEventsByMoveEventStructName(
             string moveEventStructName,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<SuiEventEnvelope[]> GetEventsBySender(
+        Task<object[]> GetEventsBySender(
             string senderAddress,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<SuiEventEnvelope[]> GetEventsByRecipient(
+        Task<object[]> GetEventsByRecipient(
             ObjectOwner recipient,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,

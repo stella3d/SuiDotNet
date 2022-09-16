@@ -233,7 +233,7 @@ namespace SuiDotNet.Client
             return asObjects;
         }
 
-        public async Task<SuiEventEnvelope[]> GetEventsByModule(
+        public async Task<object[]> GetEventsByModule(
             string package,
             string module,
             uint count = EventQueryMaxLimit,
@@ -243,10 +243,11 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count);
             LimitEndTime(ref endTime);
             
-            throw new NotImplementedException();
+            return await _rpcClient.SendRequestAsync<object[]>
+                ("sui_getEventsByModule", null, package, module, count, startTime, endTime);
         }
 
-        public async Task<SuiEventEnvelope[]> GetEventsByMoveEventStructName(
+        public async Task<object[]> GetEventsByMoveEventStructName(
             string moveEventStructName,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -254,11 +255,12 @@ namespace SuiDotNet.Client
         {
             LimitEventCount(ref count);
             LimitEndTime(ref endTime);
-
-            throw new NotImplementedException();
+            
+            return await _rpcClient.SendRequestAsync<object[]>
+                ("sui_getEventsByMoveEventStructName", null, moveEventStructName, count, startTime, endTime);
         }
 
-        public async Task<SuiEventEnvelope[]> GetEventsBySender(
+        public async Task<object[]> GetEventsBySender(
             string senderAddress,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -268,10 +270,11 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count); 
             LimitEndTime(ref endTime);
 
-            throw new NotImplementedException();
+            return await _rpcClient.SendRequestAsync<object[]>
+                ("sui_getEventsBySender", null, senderAddress, count, startTime, endTime);
         }
 
-        public async Task<SuiEventEnvelope[]> GetEventsByRecipient(
+        public async Task<object[]> GetEventsByRecipient(
             ObjectOwner recipient,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -280,7 +283,8 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count);
             LimitEndTime(ref endTime);
 
-            throw new NotImplementedException();
+            return await _rpcClient.SendRequestAsync<object[]>
+                ("sui_getEventsByRecipient", null, recipient, count, startTime, endTime);
         }
 
         public async Task<object[]> GetEventsByObject(
