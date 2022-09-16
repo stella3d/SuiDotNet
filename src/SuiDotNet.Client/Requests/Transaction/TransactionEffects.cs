@@ -30,7 +30,7 @@ namespace SuiDotNet.Client.Requests
         public string[]? Dependencies { get; set; }
         
         [JsonProperty("events")]
-        public object[]? Events { get; set; }
+        public SuiEvent[]? Events { get; set; }
         
         [JsonProperty("sharedObjects")]
         public SuiObjectReference[]? SharedObjects { get; }
@@ -49,7 +49,7 @@ namespace SuiDotNet.Client.Requests
             SuiObjectReference[]? deleted,
             OwnedObjectRef[]? mutated,
             string[]? dependencies,
-            object[]? events,
+            SuiEvent[]? events,
             SuiObjectReference[]? sharedObjects,
             SuiObjectReference[]? wrapped,
             SuiObjectReference[]? unwrapped)
