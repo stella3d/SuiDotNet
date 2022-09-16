@@ -7,23 +7,23 @@ namespace SuiDotNet.Client.Requests
     public class SuiTransactionResponse
     {
         [JsonProperty("certificate")]
-        public CertifiedTransaction Certificate { get; set; }
+        public CertifiedTransaction Certificate { get; }
         
         [JsonProperty("effects")]
-        public TransactionEffects Effects { get; set; }
+        public TransactionEffects Effects { get; }
         
         [JsonProperty("parsed_data")]
-        public SuiParsedTransactionResponse? ParsedData { get; set; }
+        public SuiParsedTransactionResponse? ParsedData { get; }
         
         [JsonProperty("timestamp_ms")]
-        public ulong? Timestamp { get; set; }
+        public ulong? Timestamp { get; }
     }
 
     [Serializable]
     public class SuiParsedTransactionResponse
     {
-        public object? Publish { get; set; }
-        public object? MergeCoin { get; set; }
-        public object? SplitCoin { get; set; }
+        public object? Publish { get; }
+        public object? MergeCoin { get; }
+        public object? SplitCoin { get; }
     }
 }

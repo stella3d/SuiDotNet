@@ -7,15 +7,15 @@ namespace SuiDotNet.Client.Requests
     public class TransactionData
     {
         [JsonProperty("gasBudget")]
-        public ulong GasBudget { get; set; }
+        public ulong GasBudget { get; }
         [JsonProperty("gasPayment")]
-        public SuiObjectReference GasPayment { get; set; }
+        public SuiObjectReference GasPayment { get; }
 
         [JsonProperty("sender")]
-        public string Sender { get; set; }
+        public string Sender { get; }
         
         [JsonProperty("transactions")]
-        public object[] Transactions { get; set; }
+        public object[] Transactions { get; }
 
         public override string ToString()
         {

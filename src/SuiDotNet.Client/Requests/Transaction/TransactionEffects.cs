@@ -7,35 +7,35 @@ namespace SuiDotNet.Client.Requests
     public class TransactionEffects
     {
         [JsonProperty("status")]
-        public ExecutionStatus Status { get; set; }
+        public ExecutionStatus Status { get; }
         
         [JsonProperty("transactionDigest")]
-        public string TransactionDigest { get; set; }
+        public string TransactionDigest { get; }
         
         [JsonProperty("gasObject")]
-        public SuiObjectReference GasObject { get; set; }
+        public SuiObjectReference GasObject { get; }
         [JsonProperty("gasUsed")]
-        public object GasUsed { get; set; }
+        public object GasUsed { get; }
         
         [JsonProperty("created")]
-        public object[]? Created { get; set; }
+        public object[]? Created { get; }
         [JsonProperty("deleted")]
-        public object[]? Deleted { get; set; }
+        public object[]? Deleted { get; }
         [JsonProperty("mutated")]
-        public object[]? Mutated { get; set; }
+        public object[]? Mutated { get; }
         
         [JsonProperty("dependencies")]
-        public string[]? Dependencies { get; set; }
+        public string[]? Dependencies { get; }
         
         [JsonProperty("events")]
-        public object[]? Events { get; set; }
+        public object[]? Events { get; }
         
         [JsonProperty("sharedObjects")]
-        public SuiObjectReference[]? SharedObjects { get; set; }
+        public SuiObjectReference[]? SharedObjects { get; }
         
         [JsonProperty("wrapped")]
-        public SuiObjectReference[]? Wrapped { get; set; }
+        public SuiObjectReference[]? Wrapped { get; }
         [JsonProperty("unwrapped")]
-        public SuiObjectReference[]? Unwrapped { get; set; }
+        public SuiObjectReference[]? Unwrapped { get; }
     }
 }

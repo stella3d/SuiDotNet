@@ -7,15 +7,15 @@ namespace SuiDotNet.Client.Requests
     public class CertifiedTransaction
     {
         [JsonProperty("transactionDigest")]
-        public string TransactionDigest { get; set; }
+        public string TransactionDigest { get; }
 
         [JsonProperty("data")]
-        public TransactionData Data { get; set; }
+        public TransactionData Data { get; }
         
         [JsonProperty("txSignature")]
-        public string Signature { get; set; }
+        public string Signature { get; }
         
         [JsonProperty("authSignInfo")]
-        public AuthorityQuorumSignInfo AuthoritySignInfo { get; set; }
+        public AuthorityQuorumSignInfo AuthoritySignInfo { get; }
     }
 }

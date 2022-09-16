@@ -7,8 +7,8 @@ namespace SuiDotNet.Client.Requests
     public class ExecutionStatus
     {
         [JsonProperty("status")]
-        public string Status { get; set; }
+        public string Status { get; }
         [JsonProperty("error")]
-        public string? Error { get; set; }
+        public string? Error { get; }
     }
 }
