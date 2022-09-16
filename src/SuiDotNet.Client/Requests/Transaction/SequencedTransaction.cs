@@ -8,8 +8,8 @@ namespace SuiDotNet.Client.Requests
     // [sequenceNumber: number, digest: string]
     public class SequencedTransaction
     {
-        public ulong SequenceNumber { get; set; }
-        public string Digest { get; set; }
+        public ulong SequenceNumber { get; }
+        public string Digest { get; }
         
         public SequencedTransaction (object[] raw)
         {
