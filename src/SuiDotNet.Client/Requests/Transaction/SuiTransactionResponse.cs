@@ -17,13 +17,17 @@ namespace SuiDotNet.Client.Requests
         
         [JsonProperty("timestamp_ms")]
         public ulong? Timestamp { get; }
-    }
-
-    [Serializable]
-    public class SuiParsedTransactionResponse
-    {
-        public object? Publish { get; }
-        public object? MergeCoin { get; }
-        public object? SplitCoin { get; }
+        
+        public SuiTransactionResponse(
+            CertifiedTransaction cert,
+            TransactionEffects effects,
+            SuiParsedTransactionResponse? parsed = null,
+            ulong? time = null)
+        {
+            Certificate = cert;
+            Effects = effects;
+            ParsedData = parsed;
+            Timestamp = time;
+        }
     }
 }

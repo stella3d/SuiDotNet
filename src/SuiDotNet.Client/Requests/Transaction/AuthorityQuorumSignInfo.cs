@@ -16,6 +16,13 @@ namespace SuiDotNet.Client.Requests
         [JsonProperty("signers_map")]
         public byte[] SignersMap { get; }
 
+        public AuthorityQuorumSignInfo(ulong epoch, string[] sig, byte[] signersMap)
+        {
+            Epoch = epoch;
+            Signature = sig;
+            SignersMap = signersMap;
+        }
+
         public override string ToString()
         {
             var sigLines = $"[\n\t{string.Join("\n\t", Signature)}\n]";

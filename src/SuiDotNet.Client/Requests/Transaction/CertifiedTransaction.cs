@@ -17,5 +17,13 @@ namespace SuiDotNet.Client.Requests
         
         [JsonProperty("authSignInfo")]
         public AuthorityQuorumSignInfo AuthoritySignInfo { get; }
+        
+        public CertifiedTransaction(string digest, TransactionData data, string sig, AuthorityQuorumSignInfo signInfo)
+        {
+            TransactionDigest = digest;
+            Data = data;
+            Signature = sig;
+            AuthoritySignInfo = signInfo;
+        }
     }
 }

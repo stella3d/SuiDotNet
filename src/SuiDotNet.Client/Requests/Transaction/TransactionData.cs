@@ -17,6 +17,14 @@ namespace SuiDotNet.Client.Requests
         [JsonProperty("transactions")]
         public object[] Transactions { get; }
 
+        public TransactionData(ulong budget, SuiObjectReference payment, string sender, object[] transactions)
+        {
+            GasBudget = budget;
+            GasPayment = payment;
+            Sender = sender;
+            Transactions = transactions;
+        }
+
         public override string ToString()
         {
             var objId = $"\n\tobj id: {GasPayment.ObjectId}";

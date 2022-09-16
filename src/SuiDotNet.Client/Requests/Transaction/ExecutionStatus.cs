@@ -8,7 +8,14 @@ namespace SuiDotNet.Client.Requests
     {
         [JsonProperty("status")]
         public string Status { get; }
+        
         [JsonProperty("error")]
         public string? Error { get; }
+
+        public ExecutionStatus(string status, string? error = null)
+        {
+            Status = status;
+            Error = error;
+        }
     }
 }
