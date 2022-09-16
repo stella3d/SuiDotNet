@@ -1,12 +1,18 @@
 using System;
+using Newtonsoft.Json;
 
 namespace SuiDotNet.Client.Requests
 {
     [Serializable]
     public class SuiEventEnvelope
     {
+        [JsonProperty("timestamp")]
         public DateTimeOffset Timestamp { get; }
+        
+        [JsonProperty("txDigest")]
         public string TxDigest { get; }
+        
+        [JsonProperty("event")]
         public object Event { get; }
 
         public SuiEventEnvelope(ulong time, string digest, object evnt)

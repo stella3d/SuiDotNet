@@ -216,15 +216,15 @@ namespace SuiDotNet.Client
             input = input < EventQueryMaxLimit ? input : EventQueryMaxLimit;
         }
 
-        public async Task<object[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
+        public async Task<SuiEventEnvelope[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
         {
             StringTypes.ThrowIfNotTxDigest(txDigest);
             LimitEventCount(ref count); 
-            return await _rpcClient.SendRequestAsync<object[]>
+            return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsByTransaction", null, txDigest, count);
         }
 
-        public async Task<object[]> GetEventsByModule(
+        public async Task<SuiEventEnvelope[]> GetEventsByModule(
             string package,
             string module,
             uint count = EventQueryMaxLimit,
@@ -234,7 +234,7 @@ namespace SuiDotNet.Client
             throw new NotImplementedException();
         }
 
-        public async Task<object[]> GetEventsByMoveEventStructName(
+        public async Task<SuiEventEnvelope[]> GetEventsByMoveEventStructName(
             string moveEventStructName,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -243,7 +243,7 @@ namespace SuiDotNet.Client
             throw new NotImplementedException();
         }
 
-        public async Task<object[]> GetEventsBySender(
+        public async Task<SuiEventEnvelope[]> GetEventsBySender(
             string senderAddress,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -252,7 +252,7 @@ namespace SuiDotNet.Client
             throw new NotImplementedException();
         }
 
-        public async Task<object[]> GetEventsByRecipient(
+        public async Task<SuiEventEnvelope[]> GetEventsByRecipient(
             ObjectOwner recipient,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -261,7 +261,7 @@ namespace SuiDotNet.Client
             throw new NotImplementedException();
         }
 
-        public async Task<object[]> GetEventsByObject(
+        public async Task<SuiEventEnvelope[]> GetEventsByObject(
             string objectId,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -270,7 +270,7 @@ namespace SuiDotNet.Client
             throw new NotImplementedException();
         }
 
-        public async Task<object[]> GetEventsByTimeRange(
+        public async Task<SuiEventEnvelope[]> GetEventsByTimeRange(
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue)
