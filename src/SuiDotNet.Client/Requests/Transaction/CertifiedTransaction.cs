@@ -10,7 +10,7 @@ namespace SuiDotNet.Client.Requests
         public string TransactionDigest { get; set; }
 
         [JsonProperty("data", Required = Required.Always)]
-        public TransactionData Data { get; }
+        public TransactionData Data { get; set;  }
         
         [JsonProperty("txSignature", Required = Required.Always)]
         public string Signature { get; set; }
