@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nethereum.JsonRpc.Client;
@@ -134,6 +135,33 @@ namespace SuiDotNet.Client
                 throw new Exception("'txDigest' must be a 44-character base64 string");
             
             return await _rpcClient.SendRequestAsync<SuiTransactionResponse>("sui_getTransaction", null, txDigest);
+        }
+        
+        public async Task<SuiTransactionResponse[]> GetTransactionWithEffectsBatch(ICollection<string> txDigests)
+        {
+            if (!txDigests.Any())
+                return Array.Empty<SuiTransactionResponse>();
+
+            var request = new SuiGetTransaction(_rpcClient);
+            var batchRequest = new RpcRequestResponseBatch();
+            var batchIndex = 0;
+            foreach (var digest in txDigests)
+            {
+                batchRequest.BatchItems.Add(
+                    new RpcRequestResponseBatchItem<SuiGetTransaction, SuiTransactionResponse>(
+                        request, request.BuildRequest(digest, batchIndex))
+                );
+                batchIndex++;
+            }
+
+            var response = await _rpcClient.SendBatchRequestAsync(batchRequest);
+
+            var responses = response.BatchItems
+                .OfType<RpcRequestResponseBatchItem<SuiGetTransaction, SuiTransactionResponse>>()
+                .Select(x => x.Response)
+                .ToArray();
+
+            return responses;
         }
         
         public async Task<SequencedTransaction[]> GetTransactionsForAddress(string address)

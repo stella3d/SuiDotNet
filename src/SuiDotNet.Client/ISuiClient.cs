@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SuiDotNet.Client.Requests;
 
@@ -22,6 +23,7 @@ namespace SuiDotNet.Client
 
         // sui_getTransaction* RPC methods
         Task<SuiTransactionResponse> GetTransactionWithEffects(string txDigest);
+        Task<SuiTransactionResponse[]> GetTransactionWithEffectsBatch(ICollection<string> txDigests);
         Task<SequencedTransaction[]> GetTransactionsForAddress(string address);
         Task<SequencedTransaction[]> GetTransactionsForObject(string objectId);
 
