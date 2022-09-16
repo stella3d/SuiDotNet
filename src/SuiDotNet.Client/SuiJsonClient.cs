@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Nethereum.JsonRpc.Client;
@@ -218,10 +219,14 @@ namespace SuiDotNet.Client
         public async Task<SuiEventEnvelope[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
         {
             StringTypes.ThrowIfNotTxDigest(txDigest);
-            LimitEventCount(ref count); 
-            
-            return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
+            LimitEventCount(ref count);
+
+            var raw = await _rpcClient.SendRequestAsync<RawSuiEventEnvelope[]>
                 ("sui_getEventsByTransaction", null, txDigest, count);
+
+            return raw
+                .Select(r => new SuiEventEnvelope(r))
+                .ToArray();
         }
 
         public async Task<SuiEventEnvelope[]> GetEventsByModule(
