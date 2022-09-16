@@ -30,5 +30,8 @@ namespace SuiDotNet.Client
         Task<ulong> GetTotalTransactionNumber();
         Task<SequencedTransaction[]> GetRecentTransactions(uint count = 20);
         Task<SequencedTransaction[]> GetTransactionDigestsInRange(ulong start, ulong end);
+        
+        // sui_getEvent* RPC methods
+        Task<object[]> GetEventsByTransaction(string txDigest);
     }
 }

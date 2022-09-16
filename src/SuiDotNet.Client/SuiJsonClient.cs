@@ -131,9 +131,7 @@ namespace SuiDotNet.Client
 
         public async Task<SuiTransactionResponse> GetTransactionWithEffects(string txDigest)
         {
-            if (!StringTypes.IsValidSuiTransactionDigest(txDigest))
-                throw new ArgumentException("must be a 44-character base64 string", nameof(txDigest));
-            
+            StringTypes.ThrowIfNotTxDigest(txDigest);
             return await _rpcClient.SendRequestAsync<SuiTransactionResponse>("sui_getTransaction", null, txDigest);
         }
         
@@ -209,6 +207,12 @@ namespace SuiDotNet.Client
             var raw = await _rpcClient.SendRequestAsync<object[][]>
                 ("sui_getTransactionsInRange", null, start, end);
             return SequencedTransaction.CastRawSequencedTxes(raw);
+        }
+        
+        public async Task<object[]> GetEventsByTransaction(string txDigest)
+        {
+            StringTypes.ThrowIfNotTxDigest(txDigest);
+            return await _rpcClient.SendRequestAsync<object[]>("sui_getEventsByTransaction", null, txDigest);
         }
     }
 }
