@@ -29,12 +29,11 @@ namespace SuiDotNet.Client.Requests
         {
             var objId = $"\n\tobj id: {GasPayment.ObjectId}";
             var digest = $"\n\ttx digest: {GasPayment.Digest}";
-            var paymentLines = $"\ngas payment: {{{digest},{objId}\n}}";
             var txes = string.Join(",\n", Transactions);
             return "{\n" +
-                   $"  gas budget: {GasBudget},\n" +
-                   $"  gasPayment: {paymentLines},\n" +
-                   $"  transactions: [\n\t{txes}\n]" +
+                   $"  gasBudget: {GasBudget},\n" +
+                   $"  gasPayment: {{{digest},{objId}\n}},\n" +
+                   $"  transactions: [\n{txes}\n]" +
                    "}";
         }
     }
