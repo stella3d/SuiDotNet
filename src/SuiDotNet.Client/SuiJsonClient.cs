@@ -210,11 +210,16 @@ namespace SuiDotNet.Client
         }
 
 
-        internal const ulong JsNumberMaxSafeInteger = 9007199254740991;
         internal const uint EventQueryMaxLimit = 100;
         static void LimitEventCount(ref uint input)
         {
             input = input < EventQueryMaxLimit ? input : EventQueryMaxLimit;
+        }
+        
+        internal const ulong JsNumberMaxSafeInteger = 9007199254740991;
+        static void LimitEndTime(ref ulong input)
+        {
+            input = input < JsNumberMaxSafeInteger ? input : JsNumberMaxSafeInteger;
         }
 
         public async Task<object[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
@@ -236,6 +241,7 @@ namespace SuiDotNet.Client
             ulong endTime = JsNumberMaxSafeInteger)
         {
             LimitEventCount(ref count);
+            LimitEndTime(ref endTime);
             
             throw new NotImplementedException();
         }
@@ -246,7 +252,8 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = JsNumberMaxSafeInteger)
         {
-            LimitEventCount(ref count); 
+            LimitEventCount(ref count);
+            LimitEndTime(ref endTime);
 
             throw new NotImplementedException();
         }
@@ -259,6 +266,7 @@ namespace SuiDotNet.Client
         {
             StringTypes.ThrowIfNotSuiAddress(senderAddress);
             LimitEventCount(ref count); 
+            LimitEndTime(ref endTime);
 
             throw new NotImplementedException();
         }
@@ -269,7 +277,8 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = JsNumberMaxSafeInteger)
         {
-            LimitEventCount(ref count); 
+            LimitEventCount(ref count);
+            LimitEndTime(ref endTime);
 
             throw new NotImplementedException();
         }
@@ -282,6 +291,7 @@ namespace SuiDotNet.Client
         {
             StringTypes.ThrowIfNotObjectId(objectId);
             LimitEventCount(ref count); 
+            LimitEndTime(ref endTime);
             
             var raw = await _rpcClient.SendRequestAsync<object[]>
                 ("sui_getEventsByObject", null, objectId, count, startTime, endTime);
@@ -294,8 +304,9 @@ namespace SuiDotNet.Client
             ulong startTime = 0,
             ulong endTime = JsNumberMaxSafeInteger)
         {
-            LimitEventCount(ref count); 
-            
+            LimitEventCount(ref count);
+            LimitEndTime(ref endTime);
+
             var raw = await _rpcClient.SendRequestAsync<object[]>
                 ("sui_getEventsByTimeRange", null, count, startTime, endTime);
 
