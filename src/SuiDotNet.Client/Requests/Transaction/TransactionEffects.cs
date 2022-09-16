@@ -10,12 +10,12 @@ namespace SuiDotNet.Client.Requests
         public ExecutionStatus Status { get; }
         
         [JsonProperty("transactionDigest")]
-        public string TransactionDigest { get; }
+        public string TransactionDigest { get; set; }
         
         [JsonProperty("gasObject")]
-        public object GasObject { get; }
+        public OwnedObjectReference GasObject { get; set; }
         [JsonProperty("gasUsed")]
-        public object GasUsed { get; }
+        public GasCostSummary GasUsed { get; set; }
         
         [JsonProperty("created")]
         public object[]? Created { get; }
@@ -25,10 +25,10 @@ namespace SuiDotNet.Client.Requests
         public object[]? Mutated { get; }
         
         [JsonProperty("dependencies")]
-        public string[]? Dependencies { get; }
+        public string[]? Dependencies { get; set; }
         
         [JsonProperty("events")]
-        public object[]? Events { get; }
+        public object[]? Events { get; set; }
         
         [JsonProperty("sharedObjects")]
         public SuiObjectReference[]? SharedObjects { get; }
@@ -41,20 +41,20 @@ namespace SuiDotNet.Client.Requests
         public TransactionEffects(
             ExecutionStatus status, 
             string digest,
-            object gas, 
-            object gasUsed,
-            object[]? created = null,
-            object[]? deleted = null,
-            object[]? mutated = null,
-            string[]? dependencies = null,
-            object[]? events = null,
-            SuiObjectReference[]? sharedObjects = null,
-            SuiObjectReference[]? wrapped = null,
-            SuiObjectReference[]? unwrapped = null)
+            OwnedObjectReference gasObject, 
+            GasCostSummary gasUsed,
+            object[]? created,
+            object[]? deleted,
+            object[]? mutated,
+            string[]? dependencies,
+            object[]? events,
+            SuiObjectReference[]? sharedObjects,
+            SuiObjectReference[]? wrapped,
+            SuiObjectReference[]? unwrapped)
         {
             Status = status;
             TransactionDigest = digest;
-            GasObject = gas;
+            GasObject = gasObject;
             GasUsed = gasUsed;
             Created = created;
             Deleted = deleted;

@@ -10,7 +10,7 @@ namespace SuiDotNet.Client.Requests
         public object Certificate { get; set; }
         
         [JsonProperty("effects", Required = Required.Always)]
-        public object Effects { get; }
+        public TransactionEffects Effects { get; }
         
         [JsonProperty("parsed_data", Required = Required.AllowNull)]
         public SuiParsedTransactionResponse? ParsedData { get; set; }
@@ -20,7 +20,7 @@ namespace SuiDotNet.Client.Requests
         
         public SuiTransactionResponse(
             object cert,
-            object effects,
+            TransactionEffects effects,
             SuiParsedTransactionResponse? parsed,
             ulong? time)
         {
