@@ -21,8 +21,8 @@ namespace SuiDotNet.Client.Requests
             if (NewObject != null) return NewObject.ToString();
             if (DeleteObject != null) return DeleteObject.ToString();
             if (Publish != null) return Publish.ToString();
-            if (EpochChange != null) return EpochChange.ToString();
-            if (Checkpoint != null) return Checkpoint.ToString();
+            if (EpochChange != null) return $"{EpochChange}";
+            if (Checkpoint != null) return $"{Checkpoint}";
             return "{}";
         }
     }
