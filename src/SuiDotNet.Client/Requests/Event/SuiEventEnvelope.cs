@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 namespace SuiDotNet.Client.Requests
 {
     [Serializable]
-    public class BaseEventEnvelope<TTime, TEvent>
+    public class BaseEventEnvelope<TEvent>
     {
         [JsonProperty("timestamp")]
-        public TTime Timestamp { get; set; }
+        public ulong Timestamp { get; set; }
         
         [JsonProperty("txDigest")]
         public string TxDigest { get; set; }
@@ -17,7 +17,7 @@ namespace SuiDotNet.Client.Requests
 
         // 'event' is reserved, so disable this warning
         // ReSharper disable InconsistentNaming
-        public BaseEventEnvelope(TTime time, string digest, TEvent event_)
+        public BaseEventEnvelope(ulong time, string digest, TEvent event_)
         {
             Timestamp = time;
             TxDigest = digest;
@@ -26,47 +26,16 @@ namespace SuiDotNet.Client.Requests
     }
     
     [Serializable]
-    public class SuiEventEnvelope: BaseEventEnvelope<DateTimeOffset, object>
+    public class SuiEventEnvelope: BaseEventEnvelope<SuiEvent>
     {
-        public SuiEventEnvelope(DateTimeOffset time, string digest, object event_)
+        // convenience property for reading what time .Timestamp represents
+        public DateTimeOffset DateTime => DateTimeOffset.FromUnixTimeMilliseconds((long)Timestamp);
+
+        public SuiEventEnvelope(ulong time, string digest, SuiEvent event_)
             : base(time, digest, event_) { }
 
-        public SuiEventEnvelope(RawSuiEventEnvelope raw)
-            : base(
-                DateTimeOffset.FromUnixTimeMilliseconds((long) raw.Timestamp),
-                raw.TxDigest,
-                raw.Event) { }
-        
-        public override string ToString()
-        {
-            return $"{{\n\ttimestamp: {Timestamp},\n\ttxDigest: {TxDigest},\n\tevent: {Event}\n}}";
-        }
-    }
-    
-    [Serializable]
-    public class RawSuiEventEnvelope/*: BaseEventEnvelope<ulong, object>*/
-    {
-        [JsonProperty("timestamp")]
-        public ulong Timestamp { get; set; }
-        
-        [JsonProperty("txDigest")]
-        public string TxDigest { get; set; }
-        
-        [JsonProperty("event")]
-        public object Event { get; set; }
-
-        public RawSuiEventEnvelope(ulong time, string digest, object event_)
-            /*: base(time, digest, event_)*/
-        {
-            Timestamp = time;
-            TxDigest = digest;
-            Event = event_;
-        }
-        
-        public override string ToString()
-        {
-            return $"{{\n\ttimestamp: {Timestamp},\n\ttxDigest: {TxDigest},\n\tevent: {Event}\n}}";
-        }
+        public override string ToString() =>
+            $"{{\n\ttimestamp: {Timestamp},\n\ttxDigest: {TxDigest},\n\tevent: {Event}\n}}";
     }
     
     // ReSharper enable InconsistentNaming

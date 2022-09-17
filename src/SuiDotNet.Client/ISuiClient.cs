@@ -32,40 +32,40 @@ namespace SuiDotNet.Client
         Task<SequencedTransaction[]> GetTransactionDigestsInRange(ulong start, ulong end);
         
         // sui_getEvent* RPC methods
-        Task<object[]> GetEventsByTransaction(string txDigest, uint count = SuiJsonClient.EventQueryMaxLimit);
+        Task<SuiEventEnvelope[]> GetEventsByTransaction(string txDigest, uint count = SuiJsonClient.EventQueryMaxLimit);
 
-        Task<object[]> GetEventsByModule(
+        Task<SuiEventEnvelope[]> GetEventsByModule(
             string package,
             string module,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<object[]> GetEventsByMoveEventStructName(
+        Task<SuiEventEnvelope[]> GetEventsByMoveEventStructName(
             string moveEventStructName,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<object[]> GetEventsBySender(
+        Task<SuiEventEnvelope[]> GetEventsBySender(
             string senderAddress,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<object[]> GetEventsByRecipient(
+        Task<SuiEventEnvelope[]> GetEventsByRecipient(
             ObjectOwner recipient,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<object[]> GetEventsByObject(
+        Task<SuiEventEnvelope[]> GetEventsByObject(
             string objectId,
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = ulong.MaxValue);
         
-        Task<object[]> GetEventsByTimeRange(
+        Task<SuiEventEnvelope[]> GetEventsByTimeRange(
             uint count = SuiJsonClient.EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = long.MaxValue);

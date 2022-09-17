@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Nethereum.JsonRpc.Client;
@@ -222,18 +221,16 @@ namespace SuiDotNet.Client
             input = input < JsNumberMaxSafeInteger ? input : JsNumberMaxSafeInteger;
         }
 
-        public async Task<object[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
+        public async Task<SuiEventEnvelope[]> GetEventsByTransaction(string txDigest, uint count = EventQueryMaxLimit)
         {
             StringTypes.ThrowIfNotTxDigest(txDigest);
             LimitEventCount(ref count);
 
-            var asObjects = await _rpcClient.SendRequestAsync<object[]>
+            return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsByTransaction", null, txDigest, count);
-
-            return asObjects;
         }
 
-        public async Task<object[]> GetEventsByModule(
+        public async Task<SuiEventEnvelope[]> GetEventsByModule(
             string package,
             string module,
             uint count = EventQueryMaxLimit,
@@ -243,11 +240,11 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count);
             LimitEndTime(ref endTime);
             
-            return await _rpcClient.SendRequestAsync<object[]>
+            return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsByModule", null, package, module, count, startTime, endTime);
         }
 
-        public async Task<object[]> GetEventsByMoveEventStructName(
+        public async Task<SuiEventEnvelope[]> GetEventsByMoveEventStructName(
             string moveEventStructName,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -256,11 +253,16 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count);
             LimitEndTime(ref endTime);
             
-            return await _rpcClient.SendRequestAsync<object[]>
-                ("sui_getEventsByMoveEventStructName", null, moveEventStructName, count, startTime, endTime);
+            return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>(
+                "sui_getEventsByMoveEventStructName", 
+                null, 
+                moveEventStructName, 
+                count, 
+                startTime, 
+                endTime);
         }
 
-        public async Task<object[]> GetEventsBySender(
+        public async Task<SuiEventEnvelope[]> GetEventsBySender(
             string senderAddress,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -270,11 +272,11 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count); 
             LimitEndTime(ref endTime);
 
-            return await _rpcClient.SendRequestAsync<object[]>
+            return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsBySender", null, senderAddress, count, startTime, endTime);
         }
 
-        public async Task<object[]> GetEventsByRecipient(
+        public async Task<SuiEventEnvelope[]> GetEventsByRecipient(
             ObjectOwner recipient,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -283,11 +285,11 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count);
             LimitEndTime(ref endTime);
 
-            return await _rpcClient.SendRequestAsync<object[]>
+            return await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsByRecipient", null, recipient, count, startTime, endTime);
         }
 
-        public async Task<object[]> GetEventsByObject(
+        public async Task<SuiEventEnvelope[]> GetEventsByObject(
             string objectId,
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
@@ -297,13 +299,13 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count); 
             LimitEndTime(ref endTime);
             
-            var raw = await _rpcClient.SendRequestAsync<object[]>
+            var raw = await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsByObject", null, objectId, count, startTime, endTime);
 
             return raw;
         }
 
-        public async Task<object[]> GetEventsByTimeRange(
+        public async Task<SuiEventEnvelope[]> GetEventsByTimeRange(
             uint count = EventQueryMaxLimit,
             ulong startTime = 0,
             ulong endTime = JsNumberMaxSafeInteger)
@@ -311,7 +313,7 @@ namespace SuiDotNet.Client
             LimitEventCount(ref count);
             LimitEndTime(ref endTime);
 
-            var raw = await _rpcClient.SendRequestAsync<object[]>
+            var raw = await _rpcClient.SendRequestAsync<SuiEventEnvelope[]>
                 ("sui_getEventsByTimeRange", null, count, startTime, endTime);
 
             return raw;/*
