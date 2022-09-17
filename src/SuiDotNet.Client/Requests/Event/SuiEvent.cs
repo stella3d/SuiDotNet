@@ -23,7 +23,7 @@ namespace SuiDotNet.Client.Requests
             if (Publish != null) return Publish.ToString();
             if (EpochChange != null) return $"{EpochChange}";
             if (Checkpoint != null) return $"{Checkpoint}";
-            return "{}";
+            return string.Empty;
         }
     }
 }
